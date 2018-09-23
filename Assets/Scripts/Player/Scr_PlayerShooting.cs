@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class Scr_PlayerShooting : MonoBehaviour
@@ -8,12 +9,25 @@ public class Scr_PlayerShooting : MonoBehaviour
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] public Transform gunEnd;
     [SerializeField] float shootingForce = 20f;
+    [SerializeField] int ammo = 10;
+    [SerializeField] int reloadSpeed = 2;
+    [SerializeField] Slider reloadSlider;
+    [SerializeField] Slider ammoSlider;
 
     [HideInInspector] public bool gunLookingUp = false;
     [HideInInspector] public bool gunLookingDown = false;
 
+    bool reloading = false;
+    int currentAmmo;
+
     //Vector3 direction;
     //float angle;
+
+    private void Start()
+    {
+        currentAmmo = ammo;
+        reloadSlider.maxValue = ammo;
+    }
 
     private void Update()
     {
@@ -53,17 +67,50 @@ public class Scr_PlayerShooting : MonoBehaviour
         {
             Shoot();
         }
+
+        ammoSlider.value = currentAmmo;
+
+        if (reloading)
+        {
+            reloadSlider.value += reloadSpeed * Time.deltaTime;
+
+            Debug.Log("Start Reload");
+
+            if (reloadSlider.value == reloadSlider.maxValue)
+            {
+                Debug.Log("End Reload");
+
+                reloading = false;
+                reloadSlider.gameObject.SetActive(false);
+                currentAmmo = ammo;
+                reloadSlider.value = 0;
+            }
+        }        
     }
 
     void Shoot()
     {
-        Instantiate(bulletPrefab, gunEnd.position, gunEnd.rotation);
+        currentAmmo -= 1;
 
-        if (gunLookingDown)
+        if (currentAmmo > 0)
         {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            Instantiate(bulletPrefab, gunEnd.position, gunEnd.rotation);
 
-            GetComponent<Rigidbody2D>().AddForce(Vector2.up * shootingForce);
+            if (gunLookingDown)
+            {
+                GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+
+                GetComponent<Rigidbody2D>().AddForce(Vector2.up * shootingForce);
+            }
         }
+
+        else
+            Reload();
+    }
+
+    void Reload()
+    {
+        reloadSlider.gameObject.SetActive(true);
+        reloading = true;
     }
 }
