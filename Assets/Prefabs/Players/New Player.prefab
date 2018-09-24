@@ -43,7 +43,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1179269412612702
 GameObject:
   m_ObjectHideFlags: 1
@@ -74,7 +74,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1265520135765810
 GameObject:
   m_ObjectHideFlags: 1
@@ -498,6 +498,7 @@ MonoBehaviour:
   reloadSlider: {fileID: 114967126769822452}
   ammoSlider: {fileID: 0}
   lateralImpulse: 1
+  mainCamera: {fileID: 0}
   gunLookingUp: 0
   gunLookingDown: 0
   powerShotActive: 0
@@ -539,7 +540,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91f694ff43831c64382a2c4e11c0822d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_JumpForce: 700
   m_CrouchSpeed: 0.4
   m_MovementSmoothing: 0.05
   m_AirControl: 1
@@ -549,7 +549,6 @@ MonoBehaviour:
   m_GroundCheck: {fileID: 4922207629727204}
   m_CeilingCheck: {fileID: 4812648672877304}
   m_CrouchDisableCollider: {fileID: 61206088194422034}
-  anim: {fileID: 95906406459420514}
   m_Grounded: 0
   m_FacingRight: 1
   OnLandEvent:
