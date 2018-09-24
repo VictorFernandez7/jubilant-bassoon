@@ -14,6 +14,7 @@ public class Scr_PlayerShooting : MonoBehaviour
     [SerializeField] int reloadSpeed = 2;
     [SerializeField] Slider reloadSlider;
     [SerializeField] Slider ammoSlider;
+    [SerializeField] bool lateralImpulse = false;
 
     [HideInInspector] public bool gunLookingUp = false;
     [HideInInspector] public bool gunLookingDown = false;
@@ -89,11 +90,24 @@ public class Scr_PlayerShooting : MonoBehaviour
             {
                 Instantiate(bulletPrefab, gunEnd.position, gunEnd.rotation);
 
-                if (gunLookingDown)
-                {
-                    GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);
+                GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);
 
+                if (gunLookingDown)
+                {                
                     GetComponent<Rigidbody2D>().AddForce(Vector2.up * shootingForce);
+                }
+
+                else if (gunLookingUp)
+                {
+                    GetComponent<Rigidbody2D>().AddForce(Vector2.down * shootingForce);
+                }
+
+                else if (!gunLookingDown && !gunLookingUp && !GetComponent<Scr_PlayerController>().m_Grounded && lateralImpulse)
+                {
+                    if (!GetComponent<Scr_PlayerController>().m_FacingRight)
+                        GetComponent<Rigidbody2D>().AddForce(Vector2.right * shootingForce);
+                    else
+                        GetComponent<Rigidbody2D>().AddForce(-Vector2.right * shootingForce);
                 }
             }
 
@@ -103,17 +117,27 @@ public class Scr_PlayerShooting : MonoBehaviour
 
         else
         {
-            currentAmmo -= 2;
+            currentAmmo -= 1;
 
             if (currentAmmo > 0)
             {
                 Instantiate(powerBulletPrefab, gunEnd.position, gunEnd.rotation);
 
-                if (gunLookingDown)
+                if (gunLookingDown || gunLookingUp)
                 {
                     GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);
 
-                    GetComponent<Rigidbody2D>().AddForce(Vector2.up * shootingForce * 5);
+                    GetComponent<Rigidbody2D>().AddForce(Vector2.up * shootingForce * 1.5f);
+                }
+
+                else if (!gunLookingDown && !gunLookingUp && !GetComponent<Scr_PlayerController>().m_Grounded && lateralImpulse)
+                {
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);
+
+                    if (!GetComponent<Scr_PlayerController>().m_FacingRight)
+                        GetComponent<Rigidbody2D>().AddForce(Vector2.right * shootingForce);
+                    else
+                        GetComponent<Rigidbody2D>().AddForce(-Vector2.right * shootingForce);
                 }
             }
 

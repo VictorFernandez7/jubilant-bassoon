@@ -11,6 +11,7 @@ public class Scr_PlayerController : MonoBehaviour
     [SerializeField] private Transform m_GroundCheck;                           // A position marking where to check if the player is grounded.
     [SerializeField] private Transform m_CeilingCheck;                          // A position marking where to check for ceilings
     [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider that will be disabled when crouching
+    [SerializeField] public Animator anim;
 
     const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
     [HideInInspector] public bool m_Grounded;            // Whether or not the player is grounded.
@@ -18,7 +19,7 @@ public class Scr_PlayerController : MonoBehaviour
     private Rigidbody2D m_Rigidbody2D;
     [HideInInspector] public bool m_FacingRight = true;  // For determining which way the player is currently facing.
     private Vector3 m_Velocity = Vector3.zero;
-
+   
     [Header("Events")]
     [Space]
 
