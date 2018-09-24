@@ -15,6 +15,8 @@ public class Scr_PlayerShooting : MonoBehaviour
     [SerializeField] Slider reloadSlider;
     [SerializeField] Slider ammoSlider;
     [SerializeField] bool lateralImpulse = false;
+    [SerializeField] Camera mainCamera;
+    [SerializeField] float ShootRate;
 
     [HideInInspector] public bool gunLookingUp = false;
     [HideInInspector] public bool gunLookingDown = false;
@@ -22,48 +24,36 @@ public class Scr_PlayerShooting : MonoBehaviour
 
     bool reloading = false;
     int currentAmmo;
+    bool m_FacingRight = true;
+    bool canShoot;
+
+    Vector2 mousePos;
+    Vector2 direction;
 
     private void Start()
     {
         currentAmmo = ammo;
-        reloadSlider.maxValue = ammo;
+        ammoSlider.maxValue = ammo;
     }
 
     private void Update()
     {
         ammoSlider.value = currentAmmo;
 
-        if (Input.GetButtonDown("Fire1"))
+        mousePos = Input.mousePosition;
+        mousePos = mainCamera.ScreenToWorldPoint(mousePos);
+        direction = new Vector2(mousePos.x - gun.transform.position.x, mousePos.y - gun.transform.position.y);
+
+        gun.transform.right = direction;
+
+        if (Input.GetButton("Fire1"))
         {
             Shoot(powerShotActive);
         }
 
-        if (Input.GetAxisRaw("Vertical") > 0.5f && gunLookingUp == false)
+        if (Input.GetButtonDown("Reload"))
         {
-            gun.transform.Rotate(0f, 0f, 90f);
-
-            gunLookingUp = true;
-        }
-
-        else if (Input.GetAxisRaw("Vertical") < 0.5f && gunLookingUp == true)
-        {
-            gun.transform.Rotate(0f, 0f, -90f);
-
-            gunLookingUp = false;
-        }
-
-        if (Input.GetAxisRaw("Vertical") < -0.5f && gunLookingDown == false && !GetComponent<Scr_PlayerController>().m_Grounded)
-        {
-            gun.transform.Rotate(0f, 0f, -90f);
-
-            gunLookingDown = true;
-        }
-
-        else if ((Input.GetAxisRaw("Vertical") > -0.5f && gunLookingDown == true) || (gunLookingDown == true && GetComponent<Scr_PlayerController>().m_Grounded))
-        {
-            gun.transform.Rotate(0f, 0f, 90f);
-
-            gunLookingDown = false;
+            Reload(false);
         }
 
         if (reloading)
@@ -92,23 +82,7 @@ public class Scr_PlayerShooting : MonoBehaviour
 
                 GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);
 
-                if (gunLookingDown)
-                {                
-                    GetComponent<Rigidbody2D>().AddForce(Vector2.up * shootingForce);
-                }
-
-                else if (gunLookingUp)
-                {
-                    GetComponent<Rigidbody2D>().AddForce(Vector2.down * shootingForce);
-                }
-
-                else if (!gunLookingDown && !gunLookingUp && !GetComponent<Scr_PlayerController>().m_Grounded && lateralImpulse)
-                {
-                    if (!GetComponent<Scr_PlayerController>().m_FacingRight)
-                        GetComponent<Rigidbody2D>().AddForce(Vector2.right * shootingForce);
-                    else
-                        GetComponent<Rigidbody2D>().AddForce(-Vector2.right * shootingForce);
-                }
+                GetComponent<Rigidbody2D>().AddForce(- direction.normalized * shootingForce);
             }
 
             else
@@ -121,24 +95,11 @@ public class Scr_PlayerShooting : MonoBehaviour
 
             if (currentAmmo > 0)
             {
-                Instantiate(powerBulletPrefab, gunEnd.position, gunEnd.rotation);
+                Instantiate(bulletPrefab, gunEnd.position, gunEnd.rotation);
 
-                if (gunLookingDown || gunLookingUp)
-                {
-                    GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);
+                GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);
 
-                    GetComponent<Rigidbody2D>().AddForce(Vector2.up * shootingForce * 1.5f);
-                }
-
-                else if (!gunLookingDown && !gunLookingUp && !GetComponent<Scr_PlayerController>().m_Grounded && lateralImpulse)
-                {
-                    GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);
-
-                    if (!GetComponent<Scr_PlayerController>().m_FacingRight)
-                        GetComponent<Rigidbody2D>().AddForce(Vector2.right * shootingForce);
-                    else
-                        GetComponent<Rigidbody2D>().AddForce(-Vector2.right * shootingForce);
-                }
+                GetComponent<Rigidbody2D>().AddForce(-direction.normalized * shootingForce);
             }
 
             else

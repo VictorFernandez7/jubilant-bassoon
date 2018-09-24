@@ -546,6 +546,11 @@ Prefab:
       propertyPath: ammoSlider
       value: 
       objectReference: {fileID: 1992196913}
+    - target: {fileID: 114463534455091202, guid: 960aec15d0da8bd4eb1470af6c74f5cb,
+        type: 2}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1206270522}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 960aec15d0da8bd4eb1470af6c74f5cb, type: 2}
   m_IsPrefabAsset: 0
@@ -1155,7 +1160,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &943061246
 Transform:
   m_ObjectHideFlags: 0
@@ -1382,6 +1387,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4088869242665402, guid: 3148509af69222f48973c550e3d80035,
     type: 2}
   m_PrefabInternal: {fileID: 1495141838}
+--- !u!20 &1206270522 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 20755363789645486, guid: a5fc64df011cdef498a94e1cad59f228,
+    type: 2}
+  m_PrefabInternal: {fileID: 661076711}
 --- !u!4 &1429907201 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4536293707847518, guid: a217793b4626c2e4082f495d50f197b0,
