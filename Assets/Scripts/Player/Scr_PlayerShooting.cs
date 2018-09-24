@@ -7,6 +7,7 @@ public class Scr_PlayerShooting : MonoBehaviour
 {
     [SerializeField] GameObject gun;
     [SerializeField] GameObject bulletPrefab;
+    [SerializeField] GameObject powerBulletPrefab;
     [SerializeField] public Transform gunEnd;
     [SerializeField] float shootingForce = 20f;
     [SerializeField] int ammo = 10;
@@ -16,12 +17,10 @@ public class Scr_PlayerShooting : MonoBehaviour
 
     [HideInInspector] public bool gunLookingUp = false;
     [HideInInspector] public bool gunLookingDown = false;
+    [HideInInspector] public bool powerShotActive = false;
 
     bool reloading = false;
     int currentAmmo;
-
-    //Vector3 direction;
-    //float angle;
 
     private void Start()
     {
@@ -31,9 +30,12 @@ public class Scr_PlayerShooting : MonoBehaviour
 
     private void Update()
     {
-        /*direction = Input.mousePosition - gun.transform.position;
-        angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        gun.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);*/
+        ammoSlider.value = currentAmmo;
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Shoot(powerShotActive);
+        }
 
         if (Input.GetAxisRaw("Vertical") > 0.5f && gunLookingUp == false)
         {
@@ -62,24 +64,13 @@ public class Scr_PlayerShooting : MonoBehaviour
 
             gunLookingDown = false;
         }
-        
-        if (Input.GetButtonDown("Fire1"))
-        {
-            Shoot();
-        }
-
-        ammoSlider.value = currentAmmo;
 
         if (reloading)
         {
             reloadSlider.value += reloadSpeed * Time.deltaTime;
 
-            Debug.Log("Start Reload");
-
             if (reloadSlider.value == reloadSlider.maxValue)
             {
-                Debug.Log("End Reload");
-
                 reloading = false;
                 reloadSlider.gameObject.SetActive(false);
                 currentAmmo = ammo;
@@ -88,29 +79,65 @@ public class Scr_PlayerShooting : MonoBehaviour
         }        
     }
 
-    void Shoot()
+    public void Shoot(bool powerShot)
     {
-        currentAmmo -= 1;
-
-        if (currentAmmo > 0)
+        if (!powerShot)
         {
-            Instantiate(bulletPrefab, gunEnd.position, gunEnd.rotation);
+            currentAmmo -= 1;
 
-            if (gunLookingDown)
+            if (currentAmmo > 0)
             {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+                Instantiate(bulletPrefab, gunEnd.position, gunEnd.rotation);
 
-                GetComponent<Rigidbody2D>().AddForce(Vector2.up * shootingForce);
+                if (gunLookingDown)
+                {
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);
+
+                    GetComponent<Rigidbody2D>().AddForce(Vector2.up * shootingForce);
+                }
             }
+
+            else
+                Reload(false);
         }
 
         else
-            Reload();
+        {
+            currentAmmo -= 2;
+
+            if (currentAmmo > 0)
+            {
+                Instantiate(powerBulletPrefab, gunEnd.position, gunEnd.rotation);
+
+                if (gunLookingDown)
+                {
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);
+
+                    GetComponent<Rigidbody2D>().AddForce(Vector2.up * shootingForce * 5);
+                }
+            }
+
+            else
+            {
+                Reload(false);
+
+                powerShotActive = false;
+            }
+        }        
     }
 
-    void Reload()
+    public void Reload(bool powerUp)
     {
-        reloadSlider.gameObject.SetActive(true);
-        reloading = true;
+        if (!powerUp)
+        {
+            reloadSlider.gameObject.SetActive(true);
+            reloading = true;
+        }
+
+        else
+        {
+            reloading = true;
+            reloadSlider.value = reloadSlider.maxValue;
+        }
     }
 }
