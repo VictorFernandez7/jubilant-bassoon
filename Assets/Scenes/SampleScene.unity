@@ -586,8 +586,13 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4088869242665402, guid: 3148509af69222f48973c550e3d80035, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114121292293768730, guid: 3148509af69222f48973c550e3d80035,
+        type: 2}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 2001540837}
     - target: {fileID: 1272218470329606, guid: 3148509af69222f48973c550e3d80035, type: 2}
       propertyPath: m_Name
       value: ShotPowerUp (1)
@@ -943,7 +948,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4418666917712786, guid: ae1c7d45139fead4dae56f6f90b77699, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114282160278074252, guid: ae1c7d45139fead4dae56f6f90b77699,
         type: 2}
@@ -1163,9 +1168,9 @@ Transform:
   m_Children:
   - {fileID: 83577695}
   - {fileID: 262225978}
+  - {fileID: 827400488}
   - {fileID: 1203430783}
   - {fileID: 409950074}
-  - {fileID: 827400488}
   m_Father: {fileID: 215043414}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1466,8 +1471,13 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4088869242665402, guid: 3148509af69222f48973c550e3d80035, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114121292293768730, guid: 3148509af69222f48973c550e3d80035,
+        type: 2}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 2001540837}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3148509af69222f48973c550e3d80035, type: 2}
   m_IsPrefabAsset: 0
