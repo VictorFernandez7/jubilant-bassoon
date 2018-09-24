@@ -320,8 +320,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gun: {fileID: 1057409675214162}
-  bulletPb: {fileID: 1412029542020460, guid: 4b3ab4c38251eee4cb9bc105c31c1700, type: 2}
+  bulletPrefab: {fileID: 0}
   gunEnd: {fileID: 4217464313289624}
+  shootingForce: 20
+  ammo: 10
+  reloadSpeed: 2
+  reloadSlider: {fileID: 0}
+  ammoSlider: {fileID: 0}
+  gunLookingUp: 0
+  gunLookingDown: 0
 --- !u!114 &114968202873152032
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -343,6 +350,7 @@ MonoBehaviour:
   m_GroundCheck: {fileID: 4090659723672208}
   m_CeilingCheck: {fileID: 4261509133804612}
   m_CrouchDisableCollider: {fileID: 61613772442559276}
+  m_Grounded: 0
   m_FacingRight: 1
   OnLandEvent:
     m_PersistentCalls:
