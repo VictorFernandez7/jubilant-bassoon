@@ -5,55 +5,84 @@ using UnityEngine;
 
 public class Scr_PlayerShooting : MonoBehaviour
 {
+    [Header("Input selection")]
+    [SerializeField] ControlMode controlMode;
+
+    [Header("Shooting Properties")]
+    [SerializeField] int ammo = 10;
+    [Range(0, 1)] [SerializeField] public float ShootRate = 1;
+    [SerializeField] int reloadSpeed = 2;
+    [SerializeField] float bulletForce = 20f;
+    [SerializeField] float powerBulletForce = 20f;
+    [SerializeField] float buffTime = 3f;
+
+    [Header("Impulse Control")]
+    [SerializeField] bool airControl = false;
+    [Range(10 , 20)] [SerializeField] public float inAirSpeed = 10f;
+    [Range(0, 1)] [SerializeField] float horizontalImpulse = 1f;
+    [Range(0, 1)] [SerializeField] float verticalImpulse = 0f;
+    [Range(0, 180)] [SerializeField] float minXAngle = 45f;
+    [Range(0, 180)] [SerializeField] float maxXAngle = 135f;
+
+    [Header("References")]
     [SerializeField] GameObject gun;
+    [SerializeField] public Transform gunEnd;
+    [SerializeField] GameObject gunVisuals;
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] GameObject powerBulletPrefab;
-    [SerializeField] public Transform gunEnd;
-    [SerializeField] float shootingForce = 20f;
-    [SerializeField] int ammo = 10;
-    [SerializeField] int reloadSpeed = 2;
     [SerializeField] Slider reloadSlider;
-    [SerializeField] Slider ammoSlider;
-    [SerializeField] bool lateralImpulse = false;
-    [SerializeField] Camera mainCamera;
-    [SerializeField] float ShootRate;
 
-    [HideInInspector] public bool gunLookingUp = false;
-    [HideInInspector] public bool gunLookingDown = false;
+    [HideInInspector] Slider ammoSlider;
+    [HideInInspector] Camera mainCamera;
     [HideInInspector] public bool powerShotActive = false;
+    [HideInInspector] public bool shooting = false;
+    [HideInInspector] public float timer;
 
-    bool reloading = false;
-    int currentAmmo;
-    bool m_FacingRight = true;
-    bool canShoot;
+    private bool reloading = false;
+    private bool gunFaceRight = true;
+    private int currentAmmo;
+    private float buffTimeSaved;
+    private float aimAngle;
+    private Vector2 mousePos;
+    private Vector2 direction;
+    private Rigidbody2D rb;
 
-    Vector2 mousePos;
-    Vector2 direction;
+    public enum ControlMode
+    {
+        MouseAndKeyboard,
+        XboxController
+    }
 
     private void Start()
     {
+        ammoSlider = GameObject.Find("Ammo Slider").GetComponent<Slider>();
+        mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        rb = GetComponent<Rigidbody2D>();
+
         currentAmmo = ammo;
         ammoSlider.maxValue = ammo;
+        buffTimeSaved = buffTime;
     }
 
     private void Update()
     {
         ammoSlider.value = currentAmmo;
+        aimAngle = Vector2.Angle(transform.up, direction);
+        timer += Time.deltaTime;
 
-        mousePos = Input.mousePosition;
-        mousePos = mainCamera.ScreenToWorldPoint(mousePos);
-        direction = new Vector2(mousePos.x - gun.transform.position.x, mousePos.y - gun.transform.position.y);
-
-        gun.transform.right = direction;
-
-        if (Input.GetButton("Fire1"))
+        switch (controlMode)
         {
-            Shoot(powerShotActive);
-        }
+            case ControlMode.MouseAndKeyboard:
+                mousePos = Input.mousePosition;
+                mousePos = mainCamera.ScreenToWorldPoint(mousePos);
+                direction = new Vector2(mousePos.x - gun.transform.position.x, mousePos.y - gun.transform.position.y);
+                gun.transform.right = direction;
+                break;
 
-        if (Input.GetButtonDown("Reload"))
-        {
-            Reload(false);
+            case ControlMode.XboxController:
+                direction = new Vector2(Input.GetAxis("Horizontal Aim"), Input.GetAxis("Vertical Aim"));
+                gun.transform.right = direction;
+                break;
         }
 
         if (reloading)
@@ -67,22 +96,40 @@ public class Scr_PlayerShooting : MonoBehaviour
                 currentAmmo = ammo;
                 reloadSlider.value = 0;
             }
-        }        
+        }
+
+        if (powerShotActive)
+        {
+            buffTime -= Time.deltaTime;
+
+            if (buffTime <= 0)
+            {
+                buffTime = buffTimeSaved;
+                powerShotActive = false;
+            }
+        }
+
+        if (airControl)
+            GetComponent<Scr_PlayerController>().m_AirControl = !shooting;
+
+        if (direction.x > 0 && !gunFaceRight)
+            FlipGun();
+
+        else if (direction.x < 0 && gunFaceRight)
+            FlipGun();
     }
 
     public void Shoot(bool powerShot)
     {
-        if (!powerShot)
-        {
-            currentAmmo -= 1;
+        timer = 0;
+        currentAmmo -= 1;
 
+        if (powerShot)
+        {
             if (currentAmmo > 0)
             {
-                Instantiate(bulletPrefab, gunEnd.position, gunEnd.rotation);
-
-                GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);
-
-                GetComponent<Rigidbody2D>().AddForce(- direction.normalized * shootingForce);
+                Instantiate(powerBulletPrefab, gunEnd.position, gunEnd.rotation);
+                ShootingImpulse(powerBulletForce);
             }
 
             else
@@ -91,32 +138,26 @@ public class Scr_PlayerShooting : MonoBehaviour
 
         else
         {
-            currentAmmo -= 1;
-
             if (currentAmmo > 0)
             {
                 Instantiate(bulletPrefab, gunEnd.position, gunEnd.rotation);
-
-                GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);
-
-                GetComponent<Rigidbody2D>().AddForce(-direction.normalized * shootingForce);
+                ShootingImpulse(bulletForce);
             }
 
             else
-            {
                 Reload(false);
-
-                powerShotActive = false;
-            }
         }        
     }
 
-    public void Reload(bool powerUp)
+    public void Reload(bool reloadPowerUp)
     {
-        if (!powerUp)
+        if (!reloadPowerUp)
         {
-            reloadSlider.gameObject.SetActive(true);
-            reloading = true;
+            if (GetComponent<Scr_PlayerController>().m_Grounded)
+            {
+                reloading = true;
+                reloadSlider.gameObject.SetActive(true);
+            }
         }
 
         else
@@ -124,5 +165,25 @@ public class Scr_PlayerShooting : MonoBehaviour
             reloading = true;
             reloadSlider.value = reloadSlider.maxValue;
         }
+    }
+
+    void ShootingImpulse(float force)
+    {
+        if (aimAngle >= minXAngle && aimAngle <= maxXAngle)
+        {
+            rb.AddForce(-direction.normalized * (force * horizontalImpulse));
+        }
+
+        else
+        {
+            rb.velocity = new Vector2(rb.velocity.x, 0);
+            rb.AddForce(-direction.normalized * (force * verticalImpulse));
+        }
+    }
+
+    private void FlipGun()
+    {
+        gunFaceRight = !gunFaceRight;
+        gunVisuals.transform.Rotate(180f, 0f, 0f);
     }
 }
