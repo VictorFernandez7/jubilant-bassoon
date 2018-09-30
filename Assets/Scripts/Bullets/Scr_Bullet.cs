@@ -4,17 +4,34 @@ using UnityEngine;
 
 public class Scr_Bullet : MonoBehaviour
 {
-    public float speed = 20f;
-    public Rigidbody2D rb;
+    [Header("Type selection")]
+    [SerializeField] BulletType bulletType;
 
-    public Scr_PlayerShooting player;
+    [Header("Bullet Parameters")]
+    public float speed = 20f;
+    public float timeToDestroy = 3;
+
+    Rigidbody2D rb;
+
+    public enum BulletType
+    {
+        normal,
+        powerShot
+    }
 
     private void Start()
     {
-        if (player.gunLookingUp || player.gunLookingDown)
-            rb.velocity = transform.up * speed;
-        else
-            rb.velocity = transform.right * speed;
+        rb = GetComponent<Rigidbody2D>();
+
+        rb.velocity = transform.right * speed;
+    }
+
+    private void Update()
+    {
+        timeToDestroy -= Time.deltaTime;
+
+        if (timeToDestroy <= 0)
+            Destroy(gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
