@@ -572,10 +572,10 @@ MonoBehaviour:
   buffTime: 3
   airControl: 1
   inAirSpeed: 15
-  horizontalImpulse: 0.75
-  verticalImpulse: 1
-  minXAngle: 45
-  maxXAngle: 135
+  horizontalImpulse: 0.5
+  verticalImpulse: 0.75
+  minXAngle: 25
+  maxXAngle: 155
   gun: {fileID: 1467481659945430}
   gunEnd: {fileID: 4106536037328688}
   gunVisuals: {fileID: 1746612218629136}
