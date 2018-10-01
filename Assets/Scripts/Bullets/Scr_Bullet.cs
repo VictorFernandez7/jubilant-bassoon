@@ -11,7 +11,12 @@ public class Scr_Bullet : MonoBehaviour
     public float speed = 20f;
     public float timeToDestroy = 3;
 
+    [Header("Particle Systems")]
+    [SerializeField] ParticleSystem trailParticle;
+    [SerializeField] ParticleSystem collisionParticle;
+
     Rigidbody2D rb;
+    bool collisionWIthTarget = false;
 
     public enum BulletType
     {
@@ -23,7 +28,8 @@ public class Scr_Bullet : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
-        rb.velocity = transform.right * speed;
+        if (!collisionWIthTarget)
+            rb.velocity = transform.right * speed;
     }
 
     private void Update()
@@ -37,6 +43,21 @@ public class Scr_Bullet : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag != "Player")
-            Destroy(gameObject);
+        {
+            collisionWIthTarget = true;
+            rb.isKinematic = true;
+            rb.velocity = Vector3.zero;
+            GetComponentInChildren<SpriteRenderer>().enabled = false;
+            GetComponent<CircleCollider2D>().enabled = false;
+            trailParticle.Stop();
+            collisionParticle.Play();
+
+            Invoke("DestroyBullet", 1);
+        }
+    }
+
+    void DestroyBullet()
+    {
+        Destroy(gameObject);
     }
 }

@@ -30,15 +30,15 @@ public class Scr_PlayerShooting : MonoBehaviour
     [SerializeField] GameObject gunVisuals;
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] GameObject powerBulletPrefab;
-    [SerializeField] Slider reloadSlider;
+    [SerializeField] public Slider reloadSlider;
 
     [HideInInspector] Slider ammoSlider;
     [HideInInspector] Camera mainCamera;
     [HideInInspector] public bool powerShotActive = false;
     [HideInInspector] public bool shooting = false;
+    [HideInInspector] public bool reloading = false;
     [HideInInspector] public float timer;
 
-    private bool reloading = false;
     private bool gunFaceRight = true;
     private int currentAmmo;
     private float buffTimeSaved;
@@ -46,6 +46,7 @@ public class Scr_PlayerShooting : MonoBehaviour
     private Vector2 mousePos;
     private Vector2 direction;
     private Rigidbody2D rb;
+    private ParticleSystem cannonParticles;
 
     public enum ControlMode
     {
@@ -58,6 +59,7 @@ public class Scr_PlayerShooting : MonoBehaviour
         ammoSlider = GameObject.Find("Ammo Slider").GetComponent<Slider>();
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         rb = GetComponent<Rigidbody2D>();
+        cannonParticles = GetComponentInChildren<ParticleSystem>();
 
         currentAmmo = ammo;
         ammoSlider.maxValue = ammo;
@@ -123,6 +125,8 @@ public class Scr_PlayerShooting : MonoBehaviour
     {
         timer = 0;
         currentAmmo -= 1;
+
+        cannonParticles.Play();
 
         if (powerShot)
         {
