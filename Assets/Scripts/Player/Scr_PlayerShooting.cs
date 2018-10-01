@@ -9,7 +9,7 @@ public class Scr_PlayerShooting : MonoBehaviour
     [SerializeField] ControlMode controlMode;
 
     [Header("Shooting Properties")]
-    [SerializeField] int ammo = 10;
+    [SerializeField] public int ammo = 10;
     [Range(0, 1)] [SerializeField] public float ShootRate = 1;
     [SerializeField] int reloadSpeed = 2;
     [SerializeField] float bulletForce = 20f;
@@ -37,10 +37,10 @@ public class Scr_PlayerShooting : MonoBehaviour
     [HideInInspector] public bool powerShotActive = false;
     [HideInInspector] public bool shooting = false;
     [HideInInspector] public bool reloading = false;
+    [HideInInspector] public int currentAmmo;
     [HideInInspector] public float timer;
 
     private bool gunFaceRight = true;
-    private int currentAmmo;
     private float buffTimeSaved;
     private float aimAngle;
     private Vector2 mousePos;
@@ -119,7 +119,12 @@ public class Scr_PlayerShooting : MonoBehaviour
 
         else if (direction.x < 0 && gunFaceRight)
             FlipGun();
+
+        if (Mathf.Abs(rb.velocity.x) > MaxHorizontalspeed)
+            rb.velocity = Vector3.right * Mathf.Clamp(rb.velocity.x, -MaxHorizontalspeed, MaxHorizontalspeed) + Vector3.up * rb.velocity.y;
     }
+
+    public float MaxHorizontalspeed = 10;
 
     public void Shoot(bool powerShot)
     {

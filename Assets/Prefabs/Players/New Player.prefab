@@ -272,7 +272,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1939652956156464}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -47.21, y: 0.52, z: 0.099009596}
+  m_LocalPosition: {x: -42.56, y: 0.13, z: 0.099009596}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4622364557609296}
@@ -378,7 +378,7 @@ BoxCollider2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1939652956156464}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 95d70d59680c4b044ad703c1a6792a34, type: 2}
   m_IsTrigger: 0
@@ -563,19 +563,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 808500f2428960c4a9c29a5a919db15a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlMode: 0
+  controlMode: 1
   ammo: 100
   ShootRate: 0.1
   reloadSpeed: 7
-  bulletForce: 350
+  bulletForce: 500
   powerBulletForce: 500
   buffTime: 3
-  airControl: 1
+  airControl: 0
   inAirSpeed: 15
-  horizontalImpulse: 0.5
-  verticalImpulse: 0.75
-  minXAngle: 25
-  maxXAngle: 155
+  horizontalImpulse: 1
+  verticalImpulse: 0.681
+  minXAngle: 45
+  maxXAngle: 115
   gun: {fileID: 1467481659945430}
   gunEnd: {fileID: 4106536037328688}
   gunVisuals: {fileID: 1746612218629136}
@@ -587,7 +587,9 @@ MonoBehaviour:
   powerShotActive: 0
   shooting: 0
   reloading: 0
+  currentAmmo: 0
   timer: 0
+  MaxHorizontalspeed: 10
 --- !u!114 &114555591478388668
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5253,13 +5255,13 @@ ParticleSystemRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_RenderMode: 0
-  m_SortMode: 0
+  m_SortMode: 1
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.1
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
   m_LengthScale: 2
-  m_SortingFudge: 0
+  m_SortingFudge: 5.82
   m_NormalDirection: 1
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
