@@ -50,7 +50,7 @@ public class Scr_PlayerInput : MonoBehaviour
         if (Input.GetButtonUp("Fire1"))
             playerShooting.shooting = false;
 
-        if (Input.GetButtonDown("Reload"))
+        if (Input.GetButtonDown("Reload") && playerShooting.currentAmmo != playerShooting.ammo)
             playerShooting.Reload(false);
     }
 
