@@ -563,7 +563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 808500f2428960c4a9c29a5a919db15a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlMode: 1
+  controlMode: 0
   ammo: 100
   ShootRate: 0.1
   reloadSpeed: 7

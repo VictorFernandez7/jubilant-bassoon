@@ -48,6 +48,8 @@ public class Scr_PlayerShooting : MonoBehaviour
     private Rigidbody2D rb;
     private ParticleSystem cannonParticles;
 
+    public bool mode;
+
     public enum ControlMode
     {
         MouseAndKeyboard,
