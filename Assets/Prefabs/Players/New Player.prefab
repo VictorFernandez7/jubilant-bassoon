@@ -199,10 +199,10 @@ GameObject:
   - component: {fileID: 50643942626214264}
   - component: {fileID: 61077593777924344}
   - component: {fileID: 58238313933118322}
-  - component: {fileID: 114171154957805268}
-  - component: {fileID: 114332778513961408}
-  - component: {fileID: 114516381904705446}
   - component: {fileID: 95412125077430816}
+  - component: {fileID: 114332778513961408}
+  - component: {fileID: 114171154957805268}
+  - component: {fileID: 114516381904705446}
   m_Layer: 0
   m_Name: New Player
   m_TagString: Player
@@ -378,7 +378,7 @@ BoxCollider2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1939652956156464}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 95d70d59680c4b044ad703c1a6792a34, type: 2}
   m_IsTrigger: 0
@@ -564,10 +564,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controlMode: 0
-  ammo: 100
-  ShootRate: 0.1
-  reloadSpeed: 7
-  bulletForce: 500
+  ammo: 15
+  ShootRate: 0.2
+  reloadSpeed: 5
+  bulletForce: 1250
   powerBulletForce: 500
   buffTime: 3
   airControl: 0
@@ -579,7 +579,7 @@ MonoBehaviour:
   gun: {fileID: 1467481659945430}
   gunEnd: {fileID: 4106536037328688}
   gunVisuals: {fileID: 1746612218629136}
-  bulletPrefab: {fileID: 1727461739148376, guid: 665e80043f7e4ba4396981981e5badba,
+  bulletPrefab: {fileID: 1825521150965196, guid: e1dc3af030b86cb4dbbc18d57c675953,
     type: 2}
   powerBulletPrefab: {fileID: 1605310977527086, guid: 524308c3072f93e4795e601c3c2253ad,
     type: 2}
@@ -589,6 +589,7 @@ MonoBehaviour:
   reloading: 0
   currentAmmo: 0
   timer: 0
+  mode: 0
   MaxHorizontalspeed: 10
 --- !u!114 &114555591478388668
 MonoBehaviour:
@@ -5356,7 +5357,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 615a4d490a9756f43ba6dc0665cf869b, type: 3}
-  m_Color: {r: 0, g: 0.6484003, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.13383718, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
