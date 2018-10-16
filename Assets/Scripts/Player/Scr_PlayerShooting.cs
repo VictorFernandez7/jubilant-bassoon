@@ -131,9 +131,6 @@ public class Scr_PlayerShooting : MonoBehaviour
     public void Shoot(bool powerShot)
     {
         timer = 0;
-        currentAmmo -= 1;
-
-        cannonParticles.Play();
 
         if (powerShot)
         {
@@ -141,9 +138,12 @@ public class Scr_PlayerShooting : MonoBehaviour
             {
                 Instantiate(powerBulletPrefab, gunEnd.position, gunEnd.rotation);
                 ShootingImpulse(powerBulletForce);
+
+                currentAmmo -= 1;
+                cannonParticles.Play();
             }
 
-            else
+            else if (!reloading)
                 Reload(false);
         }
 
@@ -153,11 +153,14 @@ public class Scr_PlayerShooting : MonoBehaviour
             {
                 Instantiate(bulletPrefab, gunEnd.position, gunEnd.rotation);
                 ShootingImpulse(bulletForce);
+
+                currentAmmo -= 1;
+                cannonParticles.Play();
             }
 
-            else
+            else if (!reloading)
                 Reload(false);
-        }        
+        }
     }
 
     public void Reload(bool reloadPowerUp)

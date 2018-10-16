@@ -35,16 +35,16 @@ public class Scr_PlayerInput : MonoBehaviour
         {
             if (!playerShooting.reloading)
                 playerShooting.Shoot(playerShooting.powerShotActive);
-
-            else
-            {
-                playerShooting.reloadSlider.gameObject.SetActive(false);
-                playerShooting.reloadSlider.value = 0;
-                playerShooting.reloading = false;
-            }
         }
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButton("Fire2") && playerShooting.reloading)
+        {
+            playerShooting.reloadSlider.gameObject.SetActive(false);
+            playerShooting.reloadSlider.value = 0;
+            playerShooting.reloading = false;
+        }
+
+        if (Input.GetButtonDown("Fire1") && playerShooting.currentAmmo > 0)
             playerShooting.shooting = true;
 
         if (Input.GetButtonUp("Fire1"))
