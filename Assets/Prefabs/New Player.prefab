@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 224612890522756006}
   - component: {fileID: 222156792391813888}
   - component: {fileID: 114091939729008542}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: GunText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4703509764132760}
   - component: {fileID: 198847416395031748}
   - component: {fileID: 199326423850711714}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Flames
   m_TagString: FT_proyectile
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 223733445488024778}
   - component: {fileID: 114555591478388668}
   - component: {fileID: 114840962291897160}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Player Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4622364557609296}
   - component: {fileID: 212646223626729524}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 224945376116983696}
   - component: {fileID: 222967463322279820}
   - component: {fileID: 114167600107559090}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224774068946573514}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224958843141230078}
   - component: {fileID: 114348917280925932}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Reload Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,7 +180,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4273083584700958}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GunEnd 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 224774709124256866}
   - component: {fileID: 222478052923373824}
   - component: {fileID: 114325704602809562}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +212,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4051793298209118}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GunEnd 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -228,7 +228,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4803370548946260}
   - component: {fileID: 212288885141457724}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 4062053875817550}
   - component: {fileID: 198969656701810568}
   - component: {fileID: 199079382508639902}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CannonParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 114171154957805268}
   - component: {fileID: 114079099770515962}
   - component: {fileID: 114516381904705446}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: New Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -283,7 +283,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4106536037328688}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GunEnd 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -694,7 +694,7 @@ MonoBehaviour:
   m_MovementSmoothing: 0.05
   m_WhatIsGround:
     serializedVersion: 2
-    m_Bits: 7168
+    m_Bits: 3072
   m_GroundCheck: {fileID: 4047964081463828}
   m_CeilingCheck: {fileID: 4064137435356662}
   m_CrouchDisableCollider: {fileID: 61077593777924344}
@@ -10280,8 +10280,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1919.5541, y: 1080.2511}
+  m_AnchoredPosition: {x: -0.016, y: 1.713}
+  m_SizeDelta: {x: 4.8832, y: 1.0093}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224612890522756006
 RectTransform:
@@ -10373,6 +10373,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 5}
+  m_AnchoredPosition: {x: 0.0000046600503, y: -0.00000022444874}
   m_SizeDelta: {x: 160, y: 26.16}
   m_Pivot: {x: 0.5, y: 0.5}
