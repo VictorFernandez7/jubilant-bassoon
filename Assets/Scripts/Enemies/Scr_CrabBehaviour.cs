@@ -121,6 +121,7 @@ public class Scr_CrabBehaviour : MonoBehaviour
     {
         GetComponent<Rigidbody2D>().isKinematic = true;
         GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        GetComponent<CapsuleCollider2D>().enabled = false;
         healthSlider.gameObject.SetActive(false);
         crabSprite.enabled = false;
         dead = true;
