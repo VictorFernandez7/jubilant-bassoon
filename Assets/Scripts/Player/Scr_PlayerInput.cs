@@ -9,7 +9,6 @@ public class Scr_PlayerInput : MonoBehaviour
 
     Animator anim;
     float horizontalMove = 0f;
-    bool jump = false;
     bool crouch = false;
 
     private void Start()
@@ -31,32 +30,31 @@ public class Scr_PlayerInput : MonoBehaviour
         else if(Input.GetButtonUp("Crouch"))
             crouch = false;
 
-        if (Input.GetButton("Fire1") && playerShooting.timer >= playerShooting.ShootRate)
+        if (Input.GetButton("Fire1") && playerShooting.timer >= playerShooting.currentGuns[playerShooting.equipedGun].ShootRate)
         {
             if (!playerShooting.reloading)
                 playerShooting.Shoot(playerShooting.powerShotActive);
-
-            else
-            {
-                playerShooting.reloadSlider.gameObject.SetActive(false);
-                playerShooting.reloadSlider.value = 0;
-                playerShooting.reloading = false;
-            }
         }
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButton("Fire2") && playerShooting.reloading)
+        {
+            playerShooting.reloadSlider.gameObject.SetActive(false);
+            playerShooting.reloadSlider.value = 0;
+            playerShooting.reloading = false;
+        }
+
+        if (Input.GetButtonDown("Fire1") && playerShooting.currentAmmo > 0)
             playerShooting.shooting = true;
 
         if (Input.GetButtonUp("Fire1"))
             playerShooting.shooting = false;
 
-        if (Input.GetButtonDown("Reload") && playerShooting.currentAmmo != playerShooting.ammo)
+        if (Input.GetButtonDown("Reload") && playerShooting.currentAmmo != playerShooting.currentGuns[playerShooting.equipedGun].Ammo)
             playerShooting.Reload(false);
     }
 
     void FixedUpdate()
     {
         playerController.Move(horizontalMove * Time.fixedDeltaTime, crouch);
-        jump = false;
     }
 }
