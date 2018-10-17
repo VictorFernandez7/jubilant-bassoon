@@ -12,9 +12,10 @@ public class Scr_PlayerShooting : MonoBehaviour
     [Header("Current Gun")]
     [Range(0, 2)] [SerializeField] public int equipedGun;
 
-    [Header("Gun 1: MachineGun")]
+    [Header("Gun 0")]
     [SerializeField] string MG_gunName = "MachineGun";
     [SerializeField] Sprite MG_gunSprite;
+    [Range(5, 100)] [SerializeField] public float MG_damage = 25;
     [SerializeField] public int MG_ammo = 10;
     [Range(0, 1)] [SerializeField] public float MG_shootRate = 1;
     [SerializeField] int MG_reloadSpeed = 2;
@@ -23,9 +24,10 @@ public class Scr_PlayerShooting : MonoBehaviour
     [SerializeField] GameObject MG_bulletPrefab;
     [SerializeField] GameObject MG_powerBulletPrefab;
 
-    [Header("Gun 2: ShotGun")]
+    [Header("Gun 1")]
     [SerializeField] string SG_gunName = "ShotGun";
     [SerializeField] Sprite SG_gunSprite;
+    [Range(5, 100)] [SerializeField] public float SG_damage = 50;
     [SerializeField] public int SG_ammo = 10;
     [Range(0, 1)] [SerializeField] public float SG_shootRate = 1;
     [SerializeField] int SG_reloadSpeed = 2;
@@ -34,9 +36,10 @@ public class Scr_PlayerShooting : MonoBehaviour
     [SerializeField] GameObject SG_bulletPrefab;
     [SerializeField] GameObject SG_powerBulletPrefab;
 
-    [Header("Gun 3: FlameThrower")]
+    [Header("Gun 2")]
     [SerializeField] string FT_gunName = "FlameThrower";
     [SerializeField] Sprite FT_gunSprite;
+    [Range(5, 100)] [SerializeField] public float FT_damage = 5;
     [SerializeField] public int FT_ammo = 10;
     [Range(0, 1)] [SerializeField] public float FT_shootRate = 1;
     [SerializeField] int FT_reloadSpeed = 2;

@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 114335666057141546}
   m_Layer: 0
   m_Name: NormalBullet
-  m_TagString: Untagged
+  m_TagString: SG_proyectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 114585541332317128}
   m_Layer: 0
   m_Name: NormalBullet (1)
-  m_TagString: Untagged
+  m_TagString: SG_proyectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 114916282211857252}
   m_Layer: 0
   m_Name: NormalBullet (2)
-  m_TagString: Untagged
+  m_TagString: SG_proyectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 114690865920712644}
   m_Layer: 0
   m_Name: NormalBullet (3)
-  m_TagString: Untagged
+  m_TagString: SG_proyectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 114015374813701054}
   m_Layer: 0
   m_Name: NormalBullet (4)
-  m_TagString: Untagged
+  m_TagString: SG_proyectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -332,7 +332,7 @@ GameObject:
   - component: {fileID: 4473115983203720}
   m_Layer: 0
   m_Name: ShotGunBullet
-  m_TagString: Untagged
+  m_TagString: SG_proyectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
