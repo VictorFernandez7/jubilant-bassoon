@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using TMPro;
 
 public class Scr_PlayerShooting : MonoBehaviour
 {
@@ -12,8 +13,9 @@ public class Scr_PlayerShooting : MonoBehaviour
     [Range(0, 2)] [SerializeField] public int equipedGun;
 
     [Header("Gun 1: MachineGun")]
+    [SerializeField] string MG_gunName = "MachineGun";
     [SerializeField] public int MG_ammo = 10;
-    [Range(0, 1)] [SerializeField] public float MG_ShootRate = 1;
+    [Range(0, 1)] [SerializeField] public float MG_shootRate = 1;
     [SerializeField] int MG_reloadSpeed = 2;
     [SerializeField] float MG_bulletForce = 20f;
     [SerializeField] float MG_powerBulletForce = 20f;
@@ -21,8 +23,9 @@ public class Scr_PlayerShooting : MonoBehaviour
     [SerializeField] GameObject MG_powerBulletPrefab;
 
     [Header("Gun 2: ShotGun")]
+    [SerializeField] string SG_gunName = "ShotGun";
     [SerializeField] public int SG_ammo = 10;
-    [Range(0, 1)] [SerializeField] public float SG_ShootRate = 1;
+    [Range(0, 1)] [SerializeField] public float SG_shootRate = 1;
     [SerializeField] int SG_reloadSpeed = 2;
     [SerializeField] float SG_bulletForce = 20f;
     [SerializeField] float SG_powerBulletForce = 20f;
@@ -30,8 +33,9 @@ public class Scr_PlayerShooting : MonoBehaviour
     [SerializeField] GameObject SG_powerBulletPrefab;
 
     [Header("Gun 3: FlameThrower")]
+    [SerializeField] string FT_gunName = "FlameThrower";
     [SerializeField] public int FT_ammo = 10;
-    [Range(0, 1)] [SerializeField] public float FT_ShootRate = 1;
+    [Range(0, 1)] [SerializeField] public float FT_shootRate = 1;
     [SerializeField] int FT_reloadSpeed = 2;
     [SerializeField] float FT_bulletForce = 20f;
     [SerializeField] float FT_powerBulletForce = 20f;
@@ -59,6 +63,7 @@ public class Scr_PlayerShooting : MonoBehaviour
     [SerializeField] public Slider reloadSlider;
     [SerializeField] public ParticleSystem cannonParticles;
     [SerializeField] public ParticleSystem flameParticles;
+    [SerializeField] TextMeshProUGUI gunText;
 
     [HideInInspector] Slider ammoSlider;
     [HideInInspector] Camera mainCamera;
@@ -74,6 +79,7 @@ public class Scr_PlayerShooting : MonoBehaviour
     private Vector2 mousePos;
     private Vector2 direction;
     private Rigidbody2D rb;
+    private Animator anim;
 
     [SerializeField] public CurrentGun[] currentGuns = new CurrentGun[3];
 
@@ -93,8 +99,9 @@ public class Scr_PlayerShooting : MonoBehaviour
         public GameObject BulletPrefab;
         public GameObject PowerBulletPrefab;
         public Transform GunEnd;
+        public string GunName;
 
-        public CurrentGun (int ammo, float shootRate, int reloadSpeed, float bulletForce, float powerBulletForce, GameObject bulletPrefab, GameObject powerBulletPrefab, Transform gunEnd)
+        public CurrentGun (int ammo, float shootRate, int reloadSpeed, float bulletForce, float powerBulletForce, GameObject bulletPrefab, GameObject powerBulletPrefab, Transform gunEnd, string gunName)
         {
             Ammo = ammo;
             ShootRate = shootRate;
@@ -104,6 +111,7 @@ public class Scr_PlayerShooting : MonoBehaviour
             BulletPrefab = bulletPrefab;
             PowerBulletPrefab = powerBulletPrefab;
             GunEnd = gunEnd;
+            GunName = gunName;
         }
     }
 
@@ -111,6 +119,7 @@ public class Scr_PlayerShooting : MonoBehaviour
     {
         ammoSlider = GameObject.Find("Ammo Slider").GetComponent<Slider>();
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
 
         currentAmmo = MG_ammo;          // PROVISIONAL
@@ -120,29 +129,32 @@ public class Scr_PlayerShooting : MonoBehaviour
         // PROVISIONAL
         //
         currentGuns[0].Ammo = MG_ammo;
-        currentGuns[0].ShootRate = MG_ShootRate;
+        currentGuns[0].ShootRate = MG_shootRate;
         currentGuns[0].ReloadSpeed = MG_reloadSpeed;
         currentGuns[0].BulletForce = MG_bulletForce;
         currentGuns[0].PowerBulletForce = MG_powerBulletForce;
         currentGuns[0].BulletPrefab = MG_bulletPrefab;
         currentGuns[0].PowerBulletPrefab = MG_powerBulletPrefab;
         currentGuns[0].GunEnd = gunEnd0;
+        currentGuns[0].GunName = MG_gunName;
         currentGuns[1].Ammo = SG_ammo;
-        currentGuns[1].ShootRate = SG_ShootRate;
+        currentGuns[1].ShootRate = SG_shootRate;
         currentGuns[1].ReloadSpeed = SG_reloadSpeed;
         currentGuns[1].BulletForce = SG_bulletForce;
         currentGuns[1].PowerBulletForce = SG_powerBulletForce;
         currentGuns[1].BulletPrefab = SG_bulletPrefab;
         currentGuns[1].PowerBulletPrefab = SG_powerBulletPrefab;
         currentGuns[1].GunEnd = gunEnd1;
+        currentGuns[1].GunName = SG_gunName;
         currentGuns[2].Ammo = FT_ammo;
-        currentGuns[2].ShootRate = FT_ShootRate;
+        currentGuns[2].ShootRate = FT_shootRate;
         currentGuns[2].ReloadSpeed = FT_reloadSpeed;
         currentGuns[2].BulletForce = FT_bulletForce;
         currentGuns[2].PowerBulletForce = FT_powerBulletForce;
         currentGuns[2].BulletPrefab = FT_bulletPrefab;
         currentGuns[2].PowerBulletPrefab = FT_powerBulletPrefab;
         currentGuns[2].GunEnd = gunEnd2;
+        currentGuns[2].GunName = FT_gunName;
         //
         ////
     }
@@ -299,5 +311,6 @@ public class Scr_PlayerShooting : MonoBehaviour
         currentAmmo = currentGuns[targetWeapon].Ammo;
         equipedGun = targetWeapon;
         ammoSlider.maxValue = currentGuns[equipedGun].Ammo;
+        anim.SetTrigger("WeaponChange");
     }
 }
