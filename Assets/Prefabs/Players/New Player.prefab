@@ -249,6 +249,7 @@ GameObject:
   - component: {fileID: 95412125077430816}
   - component: {fileID: 114332778513961408}
   - component: {fileID: 114171154957805268}
+  - component: {fileID: 114079099770515962}
   - component: {fileID: 114516381904705446}
   m_Layer: 0
   m_Name: New Player
@@ -504,6 +505,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114079099770515962
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1939652956156464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a0d811430dfe44f9fa6ef8ca97a3d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 3
+  invulnerableTime: 1.5
+  proyectileDamage: 0.5
+  enemyCollisionDamage: 1
+  healthSlider: {fileID: 0}
 --- !u!114 &114167600107559090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10054,7 +10071,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 615a4d490a9756f43ba6dc0665cf869b, type: 3}
-  m_Color: {r: 1, g: 0.13383718, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.70026994, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
