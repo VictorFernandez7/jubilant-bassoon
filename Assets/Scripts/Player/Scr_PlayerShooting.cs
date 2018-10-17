@@ -12,8 +12,10 @@ public class Scr_PlayerShooting : MonoBehaviour
     [Header("Current Gun")]
     [Range(0, 2)] [SerializeField] public int equipedGun;
 
-    [Header("Gun 1: MachineGun")]
+    [Header("Gun 0")]
     [SerializeField] string MG_gunName = "MachineGun";
+    [SerializeField] Sprite MG_gunSprite;
+    [Range(5, 100)] [SerializeField] public float MG_damage = 25;
     [SerializeField] public int MG_ammo = 10;
     [Range(0, 1)] [SerializeField] public float MG_shootRate = 1;
     [SerializeField] int MG_reloadSpeed = 2;
@@ -22,8 +24,10 @@ public class Scr_PlayerShooting : MonoBehaviour
     [SerializeField] GameObject MG_bulletPrefab;
     [SerializeField] GameObject MG_powerBulletPrefab;
 
-    [Header("Gun 2: ShotGun")]
+    [Header("Gun 1")]
     [SerializeField] string SG_gunName = "ShotGun";
+    [SerializeField] Sprite SG_gunSprite;
+    [Range(5, 100)] [SerializeField] public float SG_damage = 50;
     [SerializeField] public int SG_ammo = 10;
     [Range(0, 1)] [SerializeField] public float SG_shootRate = 1;
     [SerializeField] int SG_reloadSpeed = 2;
@@ -32,8 +36,10 @@ public class Scr_PlayerShooting : MonoBehaviour
     [SerializeField] GameObject SG_bulletPrefab;
     [SerializeField] GameObject SG_powerBulletPrefab;
 
-    [Header("Gun 3: FlameThrower")]
+    [Header("Gun 2")]
     [SerializeField] string FT_gunName = "FlameThrower";
+    [SerializeField] Sprite FT_gunSprite;
+    [Range(5, 100)] [SerializeField] public float FT_damage = 5;
     [SerializeField] public int FT_ammo = 10;
     [Range(0, 1)] [SerializeField] public float FT_shootRate = 1;
     [SerializeField] int FT_reloadSpeed = 2;
@@ -64,6 +70,7 @@ public class Scr_PlayerShooting : MonoBehaviour
     [SerializeField] public ParticleSystem cannonParticles;
     [SerializeField] public ParticleSystem flameParticles;
     [SerializeField] TextMeshProUGUI gunText;
+    [SerializeField] SpriteRenderer gunSprite;
 
     [HideInInspector] Slider ammoSlider;
     [HideInInspector] Camera mainCamera;
@@ -100,8 +107,10 @@ public class Scr_PlayerShooting : MonoBehaviour
         public GameObject PowerBulletPrefab;
         public Transform GunEnd;
         public string GunName;
+        public Sprite GunSprite;
 
-        public CurrentGun (int ammo, float shootRate, int reloadSpeed, float bulletForce, float powerBulletForce, GameObject bulletPrefab, GameObject powerBulletPrefab, Transform gunEnd, string gunName)
+
+        public CurrentGun (int ammo, float shootRate, int reloadSpeed, float bulletForce, float powerBulletForce, GameObject bulletPrefab, GameObject powerBulletPrefab, Transform gunEnd, string gunName, Sprite gunSprite)
         {
             Ammo = ammo;
             ShootRate = shootRate;
@@ -112,6 +121,7 @@ public class Scr_PlayerShooting : MonoBehaviour
             PowerBulletPrefab = powerBulletPrefab;
             GunEnd = gunEnd;
             GunName = gunName;
+            GunSprite = gunSprite;
         }
     }
 
@@ -137,6 +147,7 @@ public class Scr_PlayerShooting : MonoBehaviour
         currentGuns[0].PowerBulletPrefab = MG_powerBulletPrefab;
         currentGuns[0].GunEnd = gunEnd0;
         currentGuns[0].GunName = MG_gunName;
+        currentGuns[0].GunSprite = MG_gunSprite;
         currentGuns[1].Ammo = SG_ammo;
         currentGuns[1].ShootRate = SG_shootRate;
         currentGuns[1].ReloadSpeed = SG_reloadSpeed;
@@ -146,6 +157,7 @@ public class Scr_PlayerShooting : MonoBehaviour
         currentGuns[1].PowerBulletPrefab = SG_powerBulletPrefab;
         currentGuns[1].GunEnd = gunEnd1;
         currentGuns[1].GunName = SG_gunName;
+        currentGuns[1].GunSprite = SG_gunSprite;
         currentGuns[2].Ammo = FT_ammo;
         currentGuns[2].ShootRate = FT_shootRate;
         currentGuns[2].ReloadSpeed = FT_reloadSpeed;
@@ -155,6 +167,7 @@ public class Scr_PlayerShooting : MonoBehaviour
         currentGuns[2].PowerBulletPrefab = FT_powerBulletPrefab;
         currentGuns[2].GunEnd = gunEnd2;
         currentGuns[2].GunName = FT_gunName;
+        currentGuns[2].GunSprite = FT_gunSprite;
         //
         ////
     }
@@ -311,6 +324,8 @@ public class Scr_PlayerShooting : MonoBehaviour
         currentAmmo = currentGuns[targetWeapon].Ammo;
         equipedGun = targetWeapon;
         ammoSlider.maxValue = currentGuns[equipedGun].Ammo;
+        gunText.text = currentGuns[equipedGun].GunName;
         anim.SetTrigger("WeaponChange");
+        gunSprite.sprite = currentGuns[targetWeapon].GunSprite;
     }
 }

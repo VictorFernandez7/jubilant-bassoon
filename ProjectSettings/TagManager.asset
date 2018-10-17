@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - MG_proyectile
+  - Undefined
+  - SG_proyectile
+  - FT_proyectile
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -17,8 +22,8 @@ TagManager:
   - PostProcessing
   - Player
   - Obstacle
-  - 
-  - 
+  - Level
+  - Enemy
   - 
   - 
   - 
