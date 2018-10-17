@@ -9,7 +9,6 @@ public class Scr_PlayerInput : MonoBehaviour
 
     Animator anim;
     float horizontalMove = 0f;
-    bool jump = false;
     bool crouch = false;
 
     private void Start()
@@ -31,7 +30,7 @@ public class Scr_PlayerInput : MonoBehaviour
         else if(Input.GetButtonUp("Crouch"))
             crouch = false;
 
-        if (Input.GetButton("Fire1") && playerShooting.timer >= playerShooting.ShootRate)
+        if (Input.GetButton("Fire1") && playerShooting.timer >= playerShooting.currentGuns[playerShooting.equipedGun].ShootRate)
         {
             if (!playerShooting.reloading)
                 playerShooting.Shoot(playerShooting.powerShotActive);
@@ -50,13 +49,12 @@ public class Scr_PlayerInput : MonoBehaviour
         if (Input.GetButtonUp("Fire1"))
             playerShooting.shooting = false;
 
-        if (Input.GetButtonDown("Reload") && playerShooting.currentAmmo != playerShooting.ammo)
+        if (Input.GetButtonDown("Reload") && playerShooting.currentAmmo != playerShooting.currentGuns[playerShooting.equipedGun].Ammo)
             playerShooting.Reload(false);
     }
 
     void FixedUpdate()
     {
         playerController.Move(horizontalMove * Time.fixedDeltaTime, crouch);
-        jump = false;
     }
 }
