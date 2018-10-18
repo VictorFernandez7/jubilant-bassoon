@@ -19,9 +19,9 @@ public class Scr_JumperBehaviour : MonoBehaviour
 
     private bool attack;
     private bool dead;
+    private bool active;
     private float moveTimer;
     private float jumpTimer;
-    private float speedX;
     private Animator anim;
     private GameObject player;
     private Rigidbody2D rb;
@@ -44,7 +44,6 @@ public class Scr_JumperBehaviour : MonoBehaviour
     private void Update()
     {
         healthSlider.value = health;
-        anim.SetFloat("SpeedX", speedX);
 
         if (attack && !dead)
         {
@@ -59,7 +58,7 @@ public class Scr_JumperBehaviour : MonoBehaviour
             }
         }
 
-        else
+        else if (active)
         {
             moveTimer -= Time.deltaTime;
 
@@ -92,7 +91,10 @@ public class Scr_JumperBehaviour : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
+        {
+            active = true;
             attack = true;
+        }
     }
 
     public void TakeDamage(float amount)
