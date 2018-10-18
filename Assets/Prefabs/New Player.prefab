@@ -364,7 +364,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1939652956156464}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -42.56, y: 0.13, z: 0.099009596}
+  m_LocalPosition: {x: -65.462, y: -4.955, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4622364557609296}
@@ -807,7 +807,7 @@ MonoBehaviour:
   MG_ammo: 50
   MG_shootRate: 0.1
   MG_reloadSpeed: 7
-  MG_bulletForce: 350
+  MG_bulletForce: 450
   MG_powerBulletForce: 650
   MG_bulletPrefab: {fileID: 1727461739148376, guid: 665e80043f7e4ba4396981981e5badba,
     type: 2}
@@ -818,7 +818,7 @@ MonoBehaviour:
   SG_ammo: 10
   SG_shootRate: 0.2
   SG_reloadSpeed: 5
-  SG_bulletForce: 750
+  SG_bulletForce: 850
   SG_powerBulletForce: 1000
   SG_bulletPrefab: {fileID: 1825521150965196, guid: e1dc3af030b86cb4dbbc18d57c675953,
     type: 2}
@@ -829,7 +829,7 @@ MonoBehaviour:
   FT_ammo: 500
   FT_shootRate: 0.05
   FT_reloadSpeed: 7
-  FT_bulletForce: 350
+  FT_bulletForce: 400
   FT_powerBulletForce: 500
   FT_bulletPrefab: {fileID: 0}
   FT_powerBulletPrefab: {fileID: 0}
@@ -10164,7 +10164,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 11
   m_Sprite: {fileID: 21300000, guid: 958b654c2436e34439a812d69fa2c132, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -10210,9 +10210,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 615a4d490a9756f43ba6dc0665cf869b, type: 3}
-  m_Color: {r: 0, g: 0.70026994, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.30462453, b: 0.4339623, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

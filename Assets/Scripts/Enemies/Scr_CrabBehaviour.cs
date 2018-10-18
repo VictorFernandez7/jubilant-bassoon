@@ -90,6 +90,17 @@ public class Scr_CrabBehaviour : MonoBehaviour
             move = false;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Obstacle")
+        {
+            if (direction == 0)
+                direction = 1;
+            else
+                direction = 0;
+        }
+    }
+
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Obstacle")
