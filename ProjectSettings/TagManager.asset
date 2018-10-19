@@ -10,6 +10,7 @@ TagManager:
   - SG_proyectile
   - FT_proyectile
   - Obstacle
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX

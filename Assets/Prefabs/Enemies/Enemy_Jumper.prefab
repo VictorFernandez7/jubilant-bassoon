@@ -343,13 +343,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  moveSpeed: 5
+  moveSpeed: 6
   jumpForce: 9000
-  timeToJump: 3
+  timeToJump: 2
   timeToMoveAfterHit: 1
-  deathParticles: {fileID: 198429509185535284}
   healthSlider: {fileID: 114772457840322312}
   jumperSprite: {fileID: 212032933565405876}
+  deathParticles: {fileID: 198429509185535284}
 --- !u!114 &114772457840322312
 MonoBehaviour:
   m_ObjectHideFlags: 1

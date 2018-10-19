@@ -52,7 +52,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4583221015994038}
   - component: {fileID: 70820830241648960}
-  - component: {fileID: 61022065733830388}
   - component: {fileID: 50272994377497758}
   - component: {fileID: 114394306482600550}
   m_Layer: 12
@@ -167,7 +166,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1753887241508558}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.59, y: 5.82, z: 0}
+  m_LocalPosition: {x: -2.0292854, y: 1.728122, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4026921496204264}
@@ -184,7 +183,7 @@ Transform:
   m_GameObject: {fileID: 1855729360505600}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children: []
   m_Father: {fileID: 4583221015994038}
   m_RootOrder: 1
@@ -200,7 +199,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 10
+  m_Mass: 20
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -209,31 +208,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &61022065733830388
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1753887241508558}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -1.2006717}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 15, y: 7.4013433}
-  m_EdgeRadius: 0
 --- !u!70 &70820830241648960
 CapsuleCollider2D:
   m_ObjectHideFlags: 1
@@ -246,8 +220,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.13}
-  m_Size: {x: 1.0816594, y: 1.0816594}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1.29, y: 2.21}
   m_Direction: 0
 --- !u!95 &95947841240756780
 Animator:
@@ -376,12 +350,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   moveSpeed: 20
-  jumpForce: 20
-  timeToJump: 2
-  timeToMoveAfterHit: 1
-  deathParticles: {fileID: 198671238764485840}
+  timeToChangePos: 2
+  timeToShoot: 1.5
+  pauseTime: 1
   healthSlider: {fileID: 114038416312239728}
-  jumperSprite: {fileID: 212784957495223816}
+  octopusSprite: {fileID: 212784957495223816}
+  deathParticles: {fileID: 198671238764485840}
+  enemyBullet: {fileID: 1518127154238074, guid: 2768ec44849805e4d8f70d8c73e8426a,
+    type: 2}
 --- !u!114 &114747558353829926
 MonoBehaviour:
   m_ObjectHideFlags: 1
