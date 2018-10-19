@@ -3,22 +3,31 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
+[RequireComponent(typeof(CapsuleCollider2D))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class Scr_OctopusBehaviour : MonoBehaviour
-{/*
+{
     [Header("Enemy Properties")]
-    [SerializeField] float health = 100f;
-    [SerializeField] float moveSpeed = 20f;
-    [SerializeField] float timeToMoveAfterHit = 1f;
-    [SerializeField] ParticleSystem deathParticles;
+    [SerializeField] private float health = 100f;
+    [Range(1, 10)] [SerializeField] private float moveSpeed = 20f;
+    [Range(0.5f, 2)] [SerializeField] private float timeToChangePos = 1f;
+    [Range(0.5f, 2)] [SerializeField] private float timeToShoot = 1.5f;
+    [SerializeField] private float pauseTime = 1f;
 
     [Header("Referentes")]
-    [SerializeField] Slider healthSlider;
-    [SerializeField] SpriteRenderer octopusSprite;
+    [SerializeField] private Slider healthSlider;
+    [SerializeField] private SpriteRenderer octopusSprite;
+    [SerializeField] private ParticleSystem deathParticles;
+    [SerializeField] private GameObject enemyBullet;
 
     private bool dead;
+    private bool move;
     private float moveTimer;
+    private float shootTimer;
+    private Vector3 targetDirection;
     private GameObject player;
     private Rigidbody2D rb;
+    private Animator anim;
 
     Scr_PlayerShooting playerShooting;
 
@@ -32,37 +41,49 @@ public class Scr_OctopusBehaviour : MonoBehaviour
         healthSlider.maxValue = health;
         healthSlider.value = health;
         healthSlider.gameObject.SetActive(false);
-        moveTimer = timeToMoveAfterHit;
+
+        MoveTimerReset();
+        ShootTimerReset();
+        GiveNewPosition();
+
+        move = true;
     }
 
     private void Update()
     {
         healthSlider.value = health;
-        anim.SetFloat("SpeedX", speedX);
 
-        if (attack && !dead)
-        {
-            transform.position = Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), player.transform.position, moveSpeed * Time.deltaTime);
-
-            jumpTimer -= Time.deltaTime;
-
-            if (jumpTimer <= 0)
-            {
-                rb.AddForce(Vector2.up * jumpForce);
-                jumpTimer = timeToJump;
-            }
-        }
-
-        else
+        if (move)
         {
             moveTimer -= Time.deltaTime;
+            shootTimer -= Time.deltaTime;
+
+            transform.Translate(targetDirection.x * Time.deltaTime, targetDirection.y * Time.deltaTime, 0);
 
             if (moveTimer <= 0)
             {
-                moveTimer = timeToMoveAfterHit;
-                attack = true;
+                GiveNewPosition();
+            }
+
+            if (shootTimer <= 0)
+            {
+                Shoot();
             }
         }
+
+        if (targetDirection.x < 0)
+        {
+            if (octopusSprite.flipX)
+                octopusSprite.flipX = false;
+        }
+
+        else if (targetDirection.x > 0)
+        {
+            if (!octopusSprite.flipX)
+                octopusSprite.flipX = true;
+        }
+
+        //print(targetDirection);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -74,7 +95,7 @@ public class Scr_OctopusBehaviour : MonoBehaviour
             TakeDamage(playerShooting.SG_damage);
 
         else if (collision.gameObject.tag == "Player")
-            attack = false;
+            move = false;
     }
 
     private void OnParticleCollision(GameObject other)
@@ -83,13 +104,30 @@ public class Scr_OctopusBehaviour : MonoBehaviour
             TakeDamage(playerShooting.FT_damage);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void Shoot()
     {
-        if (collision.gameObject.tag == "Player")
-            attack = true;
+        Instantiate(enemyBullet, transform.position,transform.rotation);
+        ShootTimerReset();
     }
 
-    public void TakeDamage(float amount)
+    private void GiveNewPosition()
+    {
+        targetDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0);
+
+        MoveTimerReset();
+    }
+
+    private void MoveTimerReset()
+    {
+        moveTimer = timeToChangePos;
+    }
+
+    private void ShootTimerReset()
+    {
+        shootTimer = timeToShoot;
+    }
+
+    private void TakeDamage(float amount)
     {
         healthSlider.gameObject.SetActive(true);
         anim.SetTrigger("TakeDamage");
@@ -99,7 +137,7 @@ public class Scr_OctopusBehaviour : MonoBehaviour
             DeathFX();
     }
 
-    void DeathFX()
+    private void DeathFX()
     {
         GetComponent<Rigidbody2D>().isKinematic = true;
         GetComponent<Rigidbody2D>().velocity = Vector3.zero;
@@ -112,8 +150,8 @@ public class Scr_OctopusBehaviour : MonoBehaviour
         Invoke("Death", 2);
     }
 
-    void Death()
+    private void Death()
     {
         Destroy(gameObject);
-    }*/
+    }
 }
