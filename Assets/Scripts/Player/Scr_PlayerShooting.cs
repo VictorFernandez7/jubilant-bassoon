@@ -4,6 +4,13 @@ using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(CircleCollider2D))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Scr_PlayerController))]
+[RequireComponent(typeof(Scr_PlayerHealth))]
+[RequireComponent(typeof(Scr_PlayerInput))]
 public class Scr_PlayerShooting : MonoBehaviour
 {
     [Header("Input selection")]
@@ -13,67 +20,65 @@ public class Scr_PlayerShooting : MonoBehaviour
     [Range(0, 2)] [SerializeField] public int equipedGun;
 
     [Header("Gun 0")]
-    [SerializeField] string MG_gunName = "MachineGun";
-    [SerializeField] Sprite MG_gunSprite;
+    [SerializeField] private string MG_gunName = "MachineGun";
+    [SerializeField] private Sprite MG_gunSprite;
     [Range(5, 100)] [SerializeField] public float MG_damage = 25;
     [SerializeField] public int MG_ammo = 10;
     [Range(0, 1)] [SerializeField] public float MG_shootRate = 1;
-    [SerializeField] int MG_reloadSpeed = 2;
-    [SerializeField] float MG_bulletForce = 20f;
-    [SerializeField] float MG_powerBulletForce = 20f;
-    [SerializeField] GameObject MG_bulletPrefab;
-    [SerializeField] GameObject MG_powerBulletPrefab;
+    [SerializeField] private int MG_reloadSpeed = 2;
+    [SerializeField] private float MG_bulletForce = 20f;
+    [SerializeField] private float MG_powerBulletForce = 20f;
+    [SerializeField] private GameObject MG_bulletPrefab;
+    [SerializeField] private GameObject MG_powerBulletPrefab;
 
     [Header("Gun 1")]
-    [SerializeField] string SG_gunName = "ShotGun";
-    [SerializeField] Sprite SG_gunSprite;
+    [SerializeField] private string SG_gunName = "ShotGun";
+    [SerializeField] private Sprite SG_gunSprite;
     [Range(5, 100)] [SerializeField] public float SG_damage = 50;
     [SerializeField] public int SG_ammo = 10;
     [Range(0, 1)] [SerializeField] public float SG_shootRate = 1;
-    [SerializeField] int SG_reloadSpeed = 2;
-    [SerializeField] float SG_bulletForce = 20f;
-    [SerializeField] float SG_powerBulletForce = 20f;
-    [SerializeField] GameObject SG_bulletPrefab;
-    [SerializeField] GameObject SG_powerBulletPrefab;
+    [SerializeField] private int SG_reloadSpeed = 2;
+    [SerializeField] private float SG_bulletForce = 20f;
+    [SerializeField] private float SG_powerBulletForce = 20f;
+    [SerializeField] private GameObject SG_bulletPrefab;
+    [SerializeField] private GameObject SG_powerBulletPrefab;
 
     [Header("Gun 2")]
-    [SerializeField] string FT_gunName = "FlameThrower";
-    [SerializeField] Sprite FT_gunSprite;
+    [SerializeField] private string FT_gunName = "FlameThrower";
+    [SerializeField] private Sprite FT_gunSprite;
     [Range(5, 100)] [SerializeField] public float FT_damage = 5;
     [SerializeField] public int FT_ammo = 10;
     [Range(0, 1)] [SerializeField] public float FT_shootRate = 1;
-    [SerializeField] int FT_reloadSpeed = 2;
-    [SerializeField] float FT_bulletForce = 20f;
-    [SerializeField] float FT_powerBulletForce = 20f;
-    [SerializeField] GameObject FT_bulletPrefab;
-    [SerializeField] GameObject FT_powerBulletPrefab;
+    [SerializeField] private int FT_reloadSpeed = 2;
+    [SerializeField] private float FT_bulletForce = 20f;
+    [SerializeField] private float FT_powerBulletForce = 20f;
+    [SerializeField] private GameObject FT_bulletPrefab;
+    [SerializeField] private GameObject FT_powerBulletPrefab;
 
     [Header("Impulse Control")]
-    [SerializeField] bool airControl = false;
+    [SerializeField] private bool airControl = false;
     [Range(10, 20)] [SerializeField] public float inAirSpeed = 10f;
-    [Range(0, 1)] [SerializeField] float horizontalImpulse = 1f;
-    [Range(0, 1)] [SerializeField] float verticalImpulse = 0f;
-    [Range(0, 180)] [SerializeField] float minXAngle = 45f;
-    [Range(0, 180)] [SerializeField] float maxXAngle = 135f;
+    [Range(0, 1)] [SerializeField] private float horizontalImpulse = 1f;
+    [Range(0, 1)] [SerializeField] private float verticalImpulse = 0f;
+    [Range(0, 180)] [SerializeField] private float minXAngle = 45f;
+    [Range(0, 180)] [SerializeField] private float maxXAngle = 135f;
     [SerializeField] public float MaxHorizontalspeed = 10;
 
     [Header("Power Up Properties")]
-    [SerializeField] float buffTime = 3f;
+    [SerializeField] private float buffTime = 3f;
 
     [Header("References")]
-    [SerializeField] GameObject gun;
+    [SerializeField] private GameObject gun;
     [SerializeField] public Transform gunEnd0;
     [SerializeField] public Transform gunEnd1;
     [SerializeField] public Transform gunEnd2;
-    [SerializeField] GameObject gunVisuals;
+    [SerializeField] private GameObject gunVisuals;
     [SerializeField] public Slider reloadSlider;
     [SerializeField] public ParticleSystem cannonParticles;
     [SerializeField] public ParticleSystem flameParticles;
-    [SerializeField] TextMeshProUGUI gunText;
-    [SerializeField] SpriteRenderer gunSprite;
+    [SerializeField] private TextMeshProUGUI gunText;
+    [SerializeField] private SpriteRenderer gunSprite;
 
-    [HideInInspector] Slider ammoSlider;
-    [HideInInspector] Camera mainCamera;
     [HideInInspector] public bool powerShotActive = false;
     [HideInInspector] public bool shooting = false;
     [HideInInspector] public bool reloading = false;
@@ -87,8 +92,10 @@ public class Scr_PlayerShooting : MonoBehaviour
     private Vector2 direction;
     private Rigidbody2D rb;
     private Animator anim;
+    private Slider ammoSlider;
+    private Camera mainCamera;
 
-    [SerializeField] public CurrentGun[] currentGuns = new CurrentGun[3];
+    public CurrentGun[] currentGuns = new CurrentGun[3];
 
     public enum ControlMode
     {
@@ -108,7 +115,6 @@ public class Scr_PlayerShooting : MonoBehaviour
         public Transform GunEnd;
         public string GunName;
         public Sprite GunSprite;
-
 
         public CurrentGun (int ammo, float shootRate, int reloadSpeed, float bulletForce, float powerBulletForce, GameObject bulletPrefab, GameObject powerBulletPrefab, Transform gunEnd, string gunName, Sprite gunSprite)
         {
@@ -136,9 +142,9 @@ public class Scr_PlayerShooting : MonoBehaviour
         ammoSlider.maxValue = MG_ammo;  // PROVISIONAL
         buffTimeSaved = buffTime;
 
-        // PROVISIONAL
+        /// PROVISIONAL
         //
-        currentGuns[0].Ammo = MG_ammo;
+        currentGuns[0].Ammo = MG_ammo; 
         currentGuns[0].ShootRate = MG_shootRate;
         currentGuns[0].ReloadSpeed = MG_reloadSpeed;
         currentGuns[0].BulletForce = MG_bulletForce;
@@ -169,7 +175,8 @@ public class Scr_PlayerShooting : MonoBehaviour
         currentGuns[2].GunName = FT_gunName;
         currentGuns[2].GunSprite = FT_gunSprite;
         //
-        ////
+        ///
+        
     }
 
     private void Update()
@@ -299,7 +306,7 @@ public class Scr_PlayerShooting : MonoBehaviour
         }
     }
 
-    void ShootingImpulse(float force)
+    private void ShootingImpulse(float force)
     {
         if (aimAngle >= minXAngle && aimAngle <= maxXAngle)
         {

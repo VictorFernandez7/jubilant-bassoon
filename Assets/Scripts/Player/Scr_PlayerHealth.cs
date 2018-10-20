@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(CircleCollider2D))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Scr_PlayerController))]
+[RequireComponent(typeof(Scr_PlayerInput))]
+[RequireComponent(typeof(Scr_PlayerShooting))]
 public class Scr_PlayerHealth : MonoBehaviour
 {
     [Header("Health Properties")]
@@ -56,14 +63,14 @@ public class Scr_PlayerHealth : MonoBehaviour
                 TakeDamage(enemyCollisionDamage);
             }
 
-            else if (collision.gameObject.tag == "Proyectile")
+            else if (collision.gameObject.tag == "EnemyBullet")
             {
                 TakeDamage(proyectileDamage);
             }
         }
     }
 
-    void TakeDamage(float amount)
+    private void TakeDamage(float amount)
     {
         health -= amount;
 
@@ -73,7 +80,7 @@ public class Scr_PlayerHealth : MonoBehaviour
             canTakeDamage = false;
     }
 
-    void ResetDamageTimer()
+    private void ResetDamageTimer()
     {
         damageTimer = invulnerableTime;
     }

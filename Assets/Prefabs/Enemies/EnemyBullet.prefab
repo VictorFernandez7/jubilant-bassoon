@@ -200,8 +200,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletType: 0
-  speed: 2
-  timeToDestroy: 3
+  speed: 1.5
+  timeToDestroy: 1.5
   trailParticle: {fileID: 198737053164221860}
   collisionParticle: {fileID: 198065727957561020}
 --- !u!198 &198065727957561020

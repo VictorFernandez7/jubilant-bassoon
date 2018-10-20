@@ -11,6 +11,7 @@ public class Scr_PickUpGun : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             collision.gameObject.GetComponent<Scr_PlayerShooting>().ChangeWeapon(gunType);
+            Destroy(gameObject);
         }
     }
 }
