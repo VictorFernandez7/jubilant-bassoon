@@ -1,6 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(CircleCollider2D))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Scr_PlayerInput))]
+[RequireComponent(typeof(Scr_PlayerHealth))]
+[RequireComponent(typeof(Scr_PlayerShooting))]
 public class Scr_PlayerController : MonoBehaviour
 {
     [Header("Movement Parameters")]
@@ -19,11 +26,11 @@ public class Scr_PlayerController : MonoBehaviour
     [HideInInspector] public bool m_Grounded;
     [HideInInspector] public bool m_FacingRight = true;
 
-    const float k_GroundedRadius = .2f;
-    const float k_CeilingRadius = .2f;
+    private const float k_GroundedRadius = .2f;
+    private const float k_CeilingRadius = .2f;
+    private bool m_wasCrouching = false;
     private Rigidbody2D m_Rigidbody2D;
     private Vector3 m_Velocity = Vector3.zero;
-    private bool m_wasCrouching = false;
 
     private void Awake()
     {

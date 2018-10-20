@@ -2,14 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(CircleCollider2D))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Scr_PlayerController))]
+[RequireComponent(typeof(Scr_PlayerHealth))]
+[RequireComponent(typeof(Scr_PlayerShooting))]
 public class Scr_PlayerInput : MonoBehaviour
 {
-    Scr_PlayerController playerController;
-    Scr_PlayerShooting playerShooting;
-
-    Animator anim;
-    float horizontalMove = 0f;
-    bool crouch = false;
+    private bool crouch;
+    private float horizontalMove;
+    private Animator anim;
+    private Scr_PlayerController playerController;
+    private Scr_PlayerShooting playerShooting;
 
     private void Start()
     {
@@ -18,7 +24,7 @@ public class Scr_PlayerInput : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    void Update()
+    private void Update()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * playerController.runSpeed;
 
@@ -53,7 +59,7 @@ public class Scr_PlayerInput : MonoBehaviour
             playerShooting.Reload(false);
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         playerController.Move(horizontalMove * Time.fixedDeltaTime, crouch);
     }
