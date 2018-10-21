@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine;
 
 [RequireComponent(typeof(CapsuleCollider2D))]
+[RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class Scr_OctopusBehaviour : MonoBehaviour
 {
@@ -45,8 +46,6 @@ public class Scr_OctopusBehaviour : MonoBehaviour
         MoveTimerReset();
         ShootTimerReset();
         GiveNewPosition();
-
-        move = true;
     }
 
     private void Update()
@@ -61,14 +60,10 @@ public class Scr_OctopusBehaviour : MonoBehaviour
             transform.Translate(targetDirection.x * Time.deltaTime, targetDirection.y * Time.deltaTime, 0);
 
             if (moveTimer <= 0)
-            {
                 GiveNewPosition();
-            }
 
             if (shootTimer <= 0)
-            {
                 Shoot();
-            }
         }
 
         if (targetDirection.x < 0)
@@ -93,15 +88,18 @@ public class Scr_OctopusBehaviour : MonoBehaviour
 
         else if (collision.gameObject.tag == "SG_proyectile")
             TakeDamage(playerShooting.SG_damage);
-
-        else if (collision.gameObject.tag == "Player")
-            move = false;
     }
 
     private void OnParticleCollision(GameObject other)
     {
         if (other.gameObject.tag == "FT_proyectile")
             TakeDamage(playerShooting.FT_damage);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+            move = true;
     }
 
     void Shoot()
@@ -139,12 +137,13 @@ public class Scr_OctopusBehaviour : MonoBehaviour
 
     private void DeathFX()
     {
-        GetComponent<Rigidbody2D>().isKinematic = true;
+        //GetComponent<Rigidbody2D>().isKinematic = true;
         GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         GetComponent<CapsuleCollider2D>().enabled = false;
         healthSlider.gameObject.SetActive(false);
         octopusSprite.enabled = false;
         dead = true;
+        move = false;
         deathParticles.Play();
 
         Invoke("Death", 2);

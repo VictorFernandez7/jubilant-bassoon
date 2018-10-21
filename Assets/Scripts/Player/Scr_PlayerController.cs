@@ -20,7 +20,7 @@ public class Scr_PlayerController : MonoBehaviour
     [SerializeField] private Transform m_GroundCheck;
     [SerializeField] private Transform m_CeilingCheck;
     [SerializeField] private Collider2D m_CrouchDisableCollider;
-    [SerializeField] private Canvas playerCanvas;
+    [SerializeField] private GameObject playerCanvas;
 
     [HideInInspector] public bool m_AirControl = false;
     [HideInInspector] public bool m_Grounded;
@@ -95,7 +95,7 @@ public class Scr_PlayerController : MonoBehaviour
     private void Flip()
     {
         m_FacingRight = !m_FacingRight;
-        transform.Rotate(0f, 180f, 0f);
-        playerCanvas.gameObject.transform.Rotate(0f, 180f, 0f);
+        //transform.Rotate(0f, 180f, 0f);
+        playerCanvas.transform.Rotate(0f, 180f, 0f);
     }
 }

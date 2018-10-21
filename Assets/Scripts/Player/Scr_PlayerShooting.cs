@@ -73,11 +73,13 @@ public class Scr_PlayerShooting : MonoBehaviour
     [SerializeField] public Transform gunEnd1;
     [SerializeField] public Transform gunEnd2;
     [SerializeField] private GameObject gunVisuals;
+    [SerializeField] private GameObject playerVisuals;
     [SerializeField] public Slider reloadSlider;
     [SerializeField] public ParticleSystem cannonParticles;
     [SerializeField] public ParticleSystem flameParticles;
     [SerializeField] private TextMeshProUGUI gunText;
     [SerializeField] private SpriteRenderer gunSprite;
+    [SerializeField] private GameObject reloadText;
 
     [HideInInspector] public bool powerShotActive = false;
     [HideInInspector] public bool shooting = false;
@@ -185,13 +187,6 @@ public class Scr_PlayerShooting : MonoBehaviour
         aimAngle = Vector2.Angle(transform.up, direction);
         timer += Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            ChangeWeapon(0);
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            ChangeWeapon(1);
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            ChangeWeapon(2);
-
         switch (controlMode)
         {
             case ControlMode.MouseAndKeyboard:
@@ -247,6 +242,11 @@ public class Scr_PlayerShooting : MonoBehaviour
             flameParticles.Play();
         else
             flameParticles.Stop();
+
+        if (currentAmmo <= 0)
+            reloadText.SetActive(true);
+        else if (!reloading)
+            reloadText.SetActive(false);
     }
 
     public void Shoot(bool powerShot)
@@ -324,6 +324,7 @@ public class Scr_PlayerShooting : MonoBehaviour
     {
         gunFaceRight = !gunFaceRight;
         gunVisuals.transform.Rotate(180f, 0f, 0f);
+        playerVisuals.GetComponent<SpriteRenderer>().flipX = !playerVisuals.GetComponent<SpriteRenderer>().flipX;
     }
 
     public void ChangeWeapon(int targetWeapon)
