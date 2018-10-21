@@ -11,6 +11,8 @@ using UnityEngine;
 [RequireComponent(typeof(Scr_PlayerShooting))]
 public class Scr_PlayerInput : MonoBehaviour
 {
+    [HideInInspector] public bool dead;
+
     private bool crouch;
     private float horizontalMove;
     private Animator anim;
@@ -26,37 +28,40 @@ public class Scr_PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        horizontalMove = Input.GetAxisRaw("Horizontal") * playerController.runSpeed;
-
-        anim.SetBool("Shoot", playerShooting.shooting);
-
-        if (Input.GetButtonDown("Crouch"))
-            crouch = true;
-
-        else if(Input.GetButtonUp("Crouch"))
-            crouch = false;
-
-        if (Input.GetButton("Fire1") && playerShooting.timer >= playerShooting.currentGuns[playerShooting.equipedGun].ShootRate)
+        if (!dead)
         {
-            if (!playerShooting.reloading)
-                playerShooting.Shoot(playerShooting.powerShotActive);
+            horizontalMove = Input.GetAxisRaw("Horizontal") * playerController.runSpeed;
+
+            anim.SetBool("Shoot", playerShooting.shooting);
+
+            if (Input.GetButtonDown("Crouch"))
+                crouch = true;
+
+            else if (Input.GetButtonUp("Crouch"))
+                crouch = false;
+
+            if (Input.GetButton("Fire1") && playerShooting.timer >= playerShooting.currentGuns[playerShooting.equipedGun].ShootRate)
+            {
+                if (!playerShooting.reloading)
+                    playerShooting.Shoot(playerShooting.powerShotActive);
+            }
+
+            if (Input.GetButton("Fire2") && playerShooting.reloading)
+            {
+                playerShooting.reloadSlider.gameObject.SetActive(false);
+                playerShooting.reloadSlider.value = 0;
+                playerShooting.reloading = false;
+            }
+
+            if (Input.GetButtonDown("Fire1") && playerShooting.currentAmmo > 0)
+                playerShooting.shooting = true;
+
+            if (Input.GetButtonUp("Fire1"))
+                playerShooting.shooting = false;
+
+            if (Input.GetButtonDown("Reload") && playerShooting.currentAmmo != playerShooting.currentGuns[playerShooting.equipedGun].Ammo)
+                playerShooting.Reload(false);
         }
-
-        if (Input.GetButton("Fire2") && playerShooting.reloading)
-        {
-            playerShooting.reloadSlider.gameObject.SetActive(false);
-            playerShooting.reloadSlider.value = 0;
-            playerShooting.reloading = false;
-        }
-
-        if (Input.GetButtonDown("Fire1") && playerShooting.currentAmmo > 0)
-            playerShooting.shooting = true;
-
-        if (Input.GetButtonUp("Fire1"))
-            playerShooting.shooting = false;
-
-        if (Input.GetButtonDown("Reload") && playerShooting.currentAmmo != playerShooting.currentGuns[playerShooting.equipedGun].Ammo)
-            playerShooting.Reload(false);
     }
 
     private void FixedUpdate()

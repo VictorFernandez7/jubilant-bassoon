@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine;
 
@@ -22,16 +23,20 @@ public class Scr_PlayerHealth : MonoBehaviour
 
     [Header("References")]
     [SerializeField] Slider healthSlider;
+    [SerializeField] ParticleSystem deathParticles;
 
     private bool canTakeDamage = true;
     private float damageTimer;
     private Animator anim;
+
+    Scr_PlayerInput playerInput;
 
     private void Start()
     {
         ResetDamageTimer();
 
         anim = GetComponent<Animator>();
+        playerInput = GameObject.Find("New Player").GetComponent<Scr_PlayerInput>();
 
         healthSlider.maxValue = health;
     }
@@ -75,7 +80,7 @@ public class Scr_PlayerHealth : MonoBehaviour
         health -= amount;
 
         if (health <= 0)
-            Death();
+            DeathFX();
         else
             canTakeDamage = false;
     }
@@ -85,8 +90,21 @@ public class Scr_PlayerHealth : MonoBehaviour
         damageTimer = invulnerableTime;
     }
 
-    public void Death()
+    private void DeathFX()
     {
-        print("Playerdeath");
+        GetComponent<Rigidbody2D>().isKinematic = true;
+        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        GetComponent<BoxCollider2D>().enabled = false;
+        GetComponent<CircleCollider2D>().enabled = false;
+        GetComponentInChildren<SpriteRenderer>().enabled = false;
+        playerInput.dead = true;
+        deathParticles.Play();
+
+        Invoke("Death", 2);
+    }
+
+    private void Death()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

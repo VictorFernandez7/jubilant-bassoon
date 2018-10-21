@@ -96,6 +96,6 @@ public class Scr_PlayerController : MonoBehaviour
     {
         m_FacingRight = !m_FacingRight;
         //transform.Rotate(0f, 180f, 0f);
-        playerCanvas.transform.Rotate(0f, 180f, 0f);
+        //playerCanvas.transform.Rotate(0f, 180f, 0f);
     }
 }
