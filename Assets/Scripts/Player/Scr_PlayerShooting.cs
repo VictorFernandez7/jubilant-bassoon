@@ -244,9 +244,16 @@ public class Scr_PlayerShooting : MonoBehaviour
             flameParticles.Stop();
 
         if (currentAmmo <= 0)
+        {
             reloadText.SetActive(true);
-        else if (!reloading)
+
+            if (reloading)
+                reloadText.SetActive(false);
+        }
+
+        else
             reloadText.SetActive(false);
+
     }
 
     public void Shoot(bool powerShot)

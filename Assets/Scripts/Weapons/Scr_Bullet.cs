@@ -30,6 +30,8 @@ public class Scr_Bullet : MonoBehaviour
 
         if (!collisionWIthTarget)
             rb.velocity = transform.right * speed;
+
+        Invoke("ActivateCollider", 0.5f);
     }
 
     private void Update()
@@ -59,5 +61,10 @@ public class Scr_Bullet : MonoBehaviour
     void DestroyBullet()
     {
         Destroy(gameObject);
+    }
+
+    void ActivateCollider()
+    {
+        GetComponent<CircleCollider2D>().enabled = true;
     }
 }
