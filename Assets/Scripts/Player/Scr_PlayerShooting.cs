@@ -14,7 +14,7 @@ using TMPro;
 public class Scr_PlayerShooting : MonoBehaviour
 {
     [Header("Input selection")]
-    [SerializeField] ControlMode controlMode;
+    [SerializeField] ControlMode currentControlMode = ControlMode.MouseAndKeyboard;
 
     [Header("Current Gun")]
     [Range(0, 2)] [SerializeField] public int equipedGun;
@@ -178,7 +178,6 @@ public class Scr_PlayerShooting : MonoBehaviour
         currentGuns[2].GunSprite = FT_gunSprite;
         //
         ///
-        
     }
 
     private void Update()
@@ -187,7 +186,7 @@ public class Scr_PlayerShooting : MonoBehaviour
         aimAngle = Vector2.Angle(transform.up, direction);
         timer += Time.deltaTime;
 
-        switch (controlMode)
+        switch (currentControlMode)
         {
             case ControlMode.MouseAndKeyboard:
                 mousePos = Input.mousePosition;
@@ -342,5 +341,13 @@ public class Scr_PlayerShooting : MonoBehaviour
         gunText.text = currentGuns[equipedGun].GunName;
         anim.SetTrigger("WeaponChange");
         gunSprite.sprite = currentGuns[targetWeapon].GunSprite;
+    }
+
+    public void ChangeControlMode()
+    {
+        if (currentControlMode == ControlMode.MouseAndKeyboard)
+            currentControlMode = ControlMode.XboxController;
+        else
+            currentControlMode = ControlMode.MouseAndKeyboard;
     }
 }
