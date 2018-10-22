@@ -31,7 +31,7 @@ public class Scr_Bullet : MonoBehaviour
         if (!collisionWIthTarget)
             rb.velocity = transform.right * speed;
 
-        Invoke("ActivateCollider", 0.5f);
+        Invoke("ActivateCollider", 0f);
     }
 
     private void Update()

@@ -32,7 +32,7 @@ public class Scr_PlayerInput : MonoBehaviour
         {
             horizontalMove = Input.GetAxisRaw("Horizontal") * playerController.runSpeed;
 
-            anim.SetBool("Shoot", playerShooting.shooting);
+            //anim.SetBool("Shoot", playerShooting.shooting);
 
             if (Input.GetButtonDown("Crouch"))
                 crouch = true;
@@ -61,6 +61,9 @@ public class Scr_PlayerInput : MonoBehaviour
 
             if (Input.GetButtonDown("Reload") && playerShooting.currentAmmo != playerShooting.currentGuns[playerShooting.equipedGun].Ammo)
                 playerShooting.Reload(false);
+
+            if (Input.GetKeyDown(KeyCode.K))
+                playerShooting.ChangeControlMode();
         }
     }
 
